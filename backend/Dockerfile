@@ -24,6 +24,9 @@ RUN poetry install --no-root --no-interaction --no-ansi
 # Copy application code
 COPY . .
 
+# Make start script executable
+RUN chmod +x start.sh
+
 # Expose port (Railway will set PORT env var)
 EXPOSE 8000
 
@@ -31,5 +34,5 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:${PORT:-8000}/health || exit 1
 
-# Start command - use shell form to expand $PORT variable
-CMD uvicorn api:app --host 0.0.0.0 --port ${PORT:-8000} --log-level info
+# Use entrypoint script to handle PORT variable
+ENTRYPOINT ["./start.sh"]
