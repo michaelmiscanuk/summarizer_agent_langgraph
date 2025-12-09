@@ -1,0 +1,95 @@
+@echo off
+echo ========================================
+echo LangGraph Backend - Clean Reinstall with UV
+echo ========================================
+echo.
+
+echo [1/6] Checking for UV installation...
+uv --version >nul 2>&1
+if %errorlevel% neq 0 (
+    echo ERROR: UV is not installed. Please install UV first:
+    echo curl -LsSf https://astral.sh/uv/install.sh | sh
+    echo Or visit: https://github.com/astral-sh/uv
+    pause
+    exit /b 1
+)
+echo UV is installed.
+echo.
+
+echo [2/6] Removing existing virtual environment...
+if exist ".venv" (
+    echo Removing .venv directory...
+    rmdir /s /q ".venv" 2>nul
+    if exist ".venv" (
+        echo Forcing removal of .venv...
+        robocopy /MIR /NFL /NDL /NJH /NJS "." "temp_empty_dir" >nul 2>&1
+        rmdir /s /q "temp_empty_dir" >nul 2>&1
+        robocopy /MIR /NFL /NDL /NJH /NJS "temp_empty_dir" ".venv" >nul 2>&1
+        rmdir /s /q ".venv" >nul 2>&1
+    )
+    echo Virtual environment removed.
+) else (
+    echo No existing virtual environment found.
+)
+echo.
+
+echo [3/6] Removing UV cache...
+if exist "%USERPROFILE%\.cache\uv" (
+    echo Removing UV cache...
+    rmdir /s /q "%USERPROFILE%\.cache\uv" 2>nul
+    echo UV cache removed.
+) else (
+    echo No UV cache found.
+)
+echo.
+
+echo [4/6] Creating new virtual environment with UV...
+uv venv
+if %errorlevel% neq 0 (
+    echo ERROR: Failed to create virtual environment.
+    pause
+    exit /b 1
+)
+echo Virtual environment created.
+echo.
+
+echo [5/6] Activating virtual environment and installing dependencies...
+call .venv\Scripts\activate.bat
+if %errorlevel% neq 0 (
+    echo ERROR: Failed to activate virtual environment.
+    pause
+    exit /b 1
+)
+
+echo Installing project in editable mode...
+uv pip install -e .
+if %errorlevel% neq 0 (
+    echo ERROR: Failed to install dependencies.
+    pause
+    exit /b 1
+)
+echo Dependencies installed successfully.
+echo.
+
+echo [6/6] Setting up VS Code Python interpreter...
+if not exist ".vscode" mkdir ".vscode"
+echo { > ".vscode\settings.json"
+echo   "python.defaultInterpreterPath": ".venv\\Scripts\\python.exe", >> ".vscode\settings.json"
+echo   "python.terminal.activateEnvironment": true >> ".vscode\settings.json"
+echo } >> ".vscode\settings.json"
+echo VS Code settings configured.
+echo.
+
+echo ========================================
+echo Installation completed successfully!
+echo ========================================
+echo.
+echo Next steps:
+echo 1. Restart VS Code to pick up the new interpreter
+echo 2. Run 'python main.py --help' to see available commands
+echo 3. Run 'python test_setup.py' to verify the setup
+echo.
+echo Virtual environment: .venv
+echo Python executable: .venv\Scripts\python.exe
+echo.
+pause
