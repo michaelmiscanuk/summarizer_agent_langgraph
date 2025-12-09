@@ -125,14 +125,17 @@ def run_workflow(
     logger.info("=" * 70)
     logger.info(f"Input text length: {len(input_text)} characters")
 
-    # Create the workflow
-    workflow = create_workflow(model_name=model_name)
+    # Create the workflow - disable checkpointer if no thread_id provided
+    use_checkpointer = thread_id is not None
+    workflow = create_workflow(model_name=model_name, use_checkpointer=use_checkpointer)
 
     # Prepare config if thread_id is provided
     config = {}
     if thread_id:
         config = {"configurable": {"thread_id": thread_id}}
-        logger.info(f"Using thread_id: {thread_id}")
+        logger.info("Using thread_id: %s", thread_id)
+    else:
+        logger.info("No thread_id provided - running without checkpointer")
 
     # Invoke the workflow
     logger.info("Invoking workflow...")
@@ -170,14 +173,15 @@ def stream_workflow(
     logger.info("Streaming Workflow")
     logger.info("=" * 70)
 
-    # Create the workflow
-    workflow = create_workflow(model_name=model_name)
+    # Create the workflow - disable checkpointer if no thread_id provided
+    use_checkpointer = thread_id is not None
+    workflow = create_workflow(model_name=model_name, use_checkpointer=use_checkpointer)
 
     # Prepare config
     config = {}
     if thread_id:
         config = {"configurable": {"thread_id": thread_id}}
-        logger.info(f"Using thread_id: {thread_id}")
+        logger.info("Using thread_id: %s", thread_id)
 
     # Stream the workflow
     logger.info("Starting stream...")

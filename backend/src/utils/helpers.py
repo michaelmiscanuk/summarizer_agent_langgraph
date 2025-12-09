@@ -6,6 +6,7 @@ validating input, and other common tasks.
 """
 
 import json
+import textwrap
 from typing import Dict, Any, Optional
 from ..graph.state import TextAnalysisState
 
@@ -74,7 +75,7 @@ def format_result(state: TextAnalysisState, format_type: str = "text") -> str:
 ## Analysis
 
 ### Summary
-{state.get('summary', 'No summary available')}
+{textwrap.fill(state.get('summary', 'No summary available'), width=80)}
 
 ### Sentiment
 **{state.get('sentiment', 'Unknown').upper()}**
@@ -94,7 +95,7 @@ INPUT STATISTICS:
   - Words: {state.get('word_count', 0)}
 
 SUMMARY:
-{state.get('summary', 'No summary available')}
+{textwrap.fill(state.get('summary', 'No summary available'), width=80)}
 
 SENTIMENT:
   {state.get('sentiment', 'Unknown').upper()}

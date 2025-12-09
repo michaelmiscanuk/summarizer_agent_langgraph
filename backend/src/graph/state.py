@@ -6,7 +6,7 @@ all nodes in the graph. The state persists throughout execution
 and nodes can read from and write to it.
 """
 
-from typing_extensions import TypedDict
+from typing import TypedDict
 
 
 class TextAnalysisState(TypedDict):
