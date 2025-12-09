@@ -7,8 +7,7 @@ services:
     root: backend
     
     build:
-      # Let Nixpacks detect Python automatically
-      # Or use Dockerfile if present
+      # Let Nixpacks detect Python automatically from pyproject.toml
       builder: NIXPACKS
     
     deploy:
@@ -21,7 +20,8 @@ services:
     env:
       PORT: 8000
       RELOAD: false
-      PYTHON_VERSION: 3.12
+      PYTHON_VERSION: "3.12"
+      NIXPACKS_PYTHON_VERSION: "3.12"
       # For local Ollama, use: http://localhost:11434
       # For Railway Ollama service, use: http://${{ollama.RAILWAY_PRIVATE_DOMAIN}}:11434
       OLLAMA_HOST: http://localhost:11434
