@@ -1,0 +1,27 @@
+# Railway Configuration - Backend Only
+# This is a simple single-service configuration for your backend
+
+services:
+  backend:
+    # Tell Railway to look in the backend folder
+    root: backend
+    
+    build:
+      # Let Nixpacks detect Python automatically
+      # Or use Dockerfile if present
+      builder: NIXPACKS
+    
+    deploy:
+      startCommand: uvicorn api:app --host 0.0.0.0 --port $PORT --log-level info
+      healthcheckPath: /health
+      healthcheckTimeout: 100
+      restartPolicyType: ON_FAILURE
+      restartPolicyMaxRetries: 10
+    
+    env:
+      PORT: 8000
+      RELOAD: false
+      PYTHON_VERSION: 3.12
+      # For local Ollama, use: http://localhost:11434
+      # For Railway Ollama service, use: http://${{ollama.RAILWAY_PRIVATE_DOMAIN}}:11434
+      OLLAMA_HOST: http://localhost:11434

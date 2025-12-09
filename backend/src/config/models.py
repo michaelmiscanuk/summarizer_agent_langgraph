@@ -57,8 +57,9 @@ class ModelConfig:
         """
         self.model_name = model_name
         self.temperature = temperature
+        # Use OLLAMA_HOST from Railway environment, fallback to localhost for dev
         self.base_url = base_url or os.getenv(
-            "OLLAMA_BASE_URL", "http://localhost:11434"
+            "OLLAMA_HOST", os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
         )
         self.num_ctx = num_ctx
         self.top_p = top_p

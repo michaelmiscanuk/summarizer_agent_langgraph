@@ -1,0 +1,28 @@
+# Dockerfile for Ollama on Railway (CPU-only)
+FROM ollama/ollama:latest
+
+# Set environment variables
+ENV OLLAMA_HOST=0.0.0.0:11434
+ENV OLLAMA_ORIGINS=*
+
+# Expose the Ollama API port
+EXPOSE 11434
+
+# Create a startup script that pulls the model and starts Ollama
+RUN echo '#!/bin/bash\n\
+# Start Ollama in the background\n\
+ollama serve &\n\
+\n\
+# Wait for Ollama to start\n\
+sleep 5\n\
+\n\
+# Pull the qwen2.5-coder:0.5b model\n\
+echo "Pulling qwen2.5-coder:0.5b model..."\n\
+ollama pull qwen2.5-coder:0.5b\n\
+\n\
+# Keep the container running\n\
+wait\n\
+' > /start.sh && chmod +x /start.sh
+
+# Run the startup script
+CMD ["/bin/bash", "/start.sh"]
