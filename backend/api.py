@@ -35,6 +35,20 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
+# Configure CORS - Allow frontend to access the API
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5000",  # Local development
+        "http://127.0.0.1:5000",
+        "https://summarizer-agent-langgraph-ufot.vercel.app",  # Production Vercel frontend
+        "https://*.vercel.app",  # All Vercel preview deployments
+    ],
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
+)
+
 
 # Request/Response models
 class TextAnalysisRequest(BaseModel):

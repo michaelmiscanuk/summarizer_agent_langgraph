@@ -25,6 +25,7 @@
         }
     ],
     "env": {
-        "FLASK_ENV": "production"
+        "FLASK_ENV": "production",
+        "API_BASE_URL": "https://summarizer-agent-langgraph-production.up.railway.app"
     }
 }
