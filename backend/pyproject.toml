@@ -143,6 +143,19 @@ filterwarnings = [
     "ignore::DeprecationWarning",
 ]
 
+[tool.pylint.messages_control]
+disable = [
+    "import-error",
+    "no-name-in-module",
+]
+
+[tool.pylint.typecheck]
+ignored-modules = [
+    "langchain.*",
+    "langchain_ollama.*",
+    "langgraph.*",
+]
+
 [tool.coverage.run]
 source = ["src"]
 omit = [

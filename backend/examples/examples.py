@@ -9,7 +9,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from src.graph.workflow import create_workflow, run_workflow
-from src.config.models import get_model, get_model_from_preset
+from src.config.models import get_model_from_preset
 from src.utils.helpers import print_result
 
 
@@ -104,11 +104,7 @@ def example_model_presets():
     print("EXAMPLE 5: Model Presets")
     print("=" * 70)
 
-    from src.config.models import get_model_from_preset
-
     # Available presets: 'creative', 'balanced', 'precise', 'deterministic'
-
-    text = "The future of technology is bright and full of possibilities."
 
     print("\n1. Using 'precise' preset (low temperature):")
     model = get_model_from_preset("precise")

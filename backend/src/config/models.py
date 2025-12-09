@@ -5,6 +5,8 @@ This module provides a centralized way to configure and initialize
 Ollama models with different parameters.
 """
 
+# pylint: disable=import-error
+
 import os
 from typing import Optional
 from langchain_ollama import ChatOllama

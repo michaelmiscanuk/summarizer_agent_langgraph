@@ -4,7 +4,17 @@ echo LangGraph Backend - Clean Reinstall with UV
 echo ========================================
 echo.
 
-echo [1/6] Checking for UV installation...
+echo [1/7] Setting working directory...
+cd /d "%~dp0"
+if %errorlevel% neq 0 (
+    echo ERROR: Failed to change to script directory.
+    pause
+    exit /b 1
+)
+echo Working directory set to: %CD%
+echo.
+
+echo [2/7] Checking for UV installation...
 uv --version >nul 2>&1
 if %errorlevel% neq 0 (
     echo ERROR: UV is not installed. Please install UV first:
@@ -16,7 +26,7 @@ if %errorlevel% neq 0 (
 echo UV is installed.
 echo.
 
-echo [2/6] Removing existing virtual environment...
+echo [3/7] Removing existing virtual environment...
 if exist ".venv" (
     echo Removing .venv directory...
     rmdir /s /q ".venv" 2>nul
@@ -33,7 +43,7 @@ if exist ".venv" (
 )
 echo.
 
-echo [3/6] Removing UV cache...
+echo [4/7] Removing UV cache...
 if exist "%USERPROFILE%\.cache\uv" (
     echo Removing UV cache...
     rmdir /s /q "%USERPROFILE%\.cache\uv" 2>nul
@@ -43,7 +53,7 @@ if exist "%USERPROFILE%\.cache\uv" (
 )
 echo.
 
-echo [4/6] Creating new virtual environment with UV...
+echo [5/7] Creating new virtual environment with UV...
 uv venv
 if %errorlevel% neq 0 (
     echo ERROR: Failed to create virtual environment.
@@ -53,7 +63,7 @@ if %errorlevel% neq 0 (
 echo Virtual environment created.
 echo.
 
-echo [5/6] Activating virtual environment and installing dependencies...
+echo [6/7] Activating virtual environment and installing dependencies...
 call .venv\Scripts\activate.bat
 if %errorlevel% neq 0 (
     echo ERROR: Failed to activate virtual environment.
@@ -71,7 +81,7 @@ if %errorlevel% neq 0 (
 echo Dependencies installed successfully.
 echo.
 
-echo [6/6] Setting up VS Code Python interpreter...
+echo [7/7] Setting up VS Code Python interpreter...
 if not exist ".vscode" mkdir ".vscode"
 echo { > ".vscode\settings.json"
 echo   "python.defaultInterpreterPath": ".venv\\Scripts\\python.exe", >> ".vscode\settings.json"

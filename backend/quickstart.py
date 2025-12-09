@@ -16,7 +16,7 @@ print("\n📋 Checking setup...\n")
 
 # Check if required packages are installed
 try:
-    import langgraph
+    import langgraph  # type: ignore  # noqa: F401
 
     print("✅ langgraph installed")
 except ImportError:
@@ -24,7 +24,7 @@ except ImportError:
     sys.exit(1)
 
 try:
-    import langchain_ollama
+    import langchain_ollama  # type: ignore  # noqa: F401
 
     print("✅ langchain-ollama installed")
 except ImportError:
@@ -33,7 +33,7 @@ except ImportError:
 
 # Check if modules load correctly
 try:
-    from src.graph.workflow import create_workflow
+    from src.graph.workflow import create_workflow  # noqa: F401
 
     print("✅ Workflow module loads correctly")
 except (ImportError, ModuleNotFoundError) as e:
@@ -43,7 +43,7 @@ except (ImportError, ModuleNotFoundError) as e:
 # Check Ollama connection (optional)
 print("\n🔌 Checking Ollama connection...")
 try:
-    from langchain_ollama import ChatOllama
+    from langchain_ollama import ChatOllama  # type: ignore
 
     model = ChatOllama(model="llama3.2", base_url="http://localhost:11434")
     # Try a simple call

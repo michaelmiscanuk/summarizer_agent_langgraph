@@ -53,8 +53,8 @@ Examples:
     parser.add_argument(
         "--model",
         type=str,
-        default="llama3.2",
-        help="Ollama model to use (default: llama3.2)",
+        default="llama3.2:1b",
+        help="Ollama model to use (default: llama3.2:1b)",
     )
 
     parser.add_argument(
@@ -150,7 +150,9 @@ def run_demo():
     print(f"Input: {samples[0][:100]}...\n")
 
     try:
-        result = run_workflow(input_text=samples[0], model_name="llama3.2")
+        result = run_workflow(
+            input_text=samples[0], model_name="llama3.2:1b", thread_id="demo"
+        )
 
         print_result(result)
 
