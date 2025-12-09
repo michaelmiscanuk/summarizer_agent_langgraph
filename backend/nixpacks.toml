@@ -1,0 +1,15 @@
+# Nixpacks configuration for Railway deployment
+[phases.setup]
+nixPkgs = ["python312"]
+
+[phases.install]
+cmds = [
+  "pip install uv",
+  "uv pip install -e ."
+]
+
+[phases.build]
+cmds = ["echo 'Build complete'"]
+
+[start]
+cmd = "uvicorn api:app --host 0.0.0.0 --port $PORT --log-level info"
