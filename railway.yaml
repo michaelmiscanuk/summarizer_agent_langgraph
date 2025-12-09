@@ -18,7 +18,6 @@ services:
       restartPolicyMaxRetries: 10
     
     env:
-      PORT: 8000
       RELOAD: false
       # For local Ollama, use: http://localhost:11434
       # For Railway Ollama service, use: http://${{ollama.RAILWAY_PRIVATE_DOMAIN}}:11434
