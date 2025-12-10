@@ -116,8 +116,8 @@ def get_model(
         # Test if Ollama is running by trying a simple invoke
         model.invoke([{"role": "user", "content": "test"}])
         return model
-    except Exception:
-        print("Ollama not available, using mock model")
+    except Exception as e:
+        print(f"Ollama not available, using mock model. Error: {str(e)}")
         return MockChatOllama()
 
 
