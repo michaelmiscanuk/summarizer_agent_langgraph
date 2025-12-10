@@ -1,8 +1,10 @@
 # Deployment Configuration Summary
 
 ## Backend (Railway)
-- **Internal URL**: `summarizer_agent_langgraph.railway.internal`
-- **Public URL**: `https://summarizer-agent-langgraph-production.up.railway.app`
+- **Internal URL**: `text-analysis-backend.railway.internal` (or check Service Name in Railway)
+  - *Note: Only works for services running INSIDE Railway*
+- **Public URL**: `https://<your-project>-production.up.railway.app` (Check Networking tab in Railway)
+  - *Note: Use this for Local and Vercel connections*
 - **Configuration**: `backend/railway.json`
 
 ## Frontend (Vercel)
