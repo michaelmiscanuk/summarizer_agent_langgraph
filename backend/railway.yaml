@@ -14,10 +14,11 @@ build:
           - uv pip install -e .
       build:
         cmds:
+          - chmod +x start.sh
           - echo "Build complete"
 
 deploy:
-  startCommand: uvicorn api:app --host 0.0.0.0 --port $PORT --log-level info
+  startCommand: ./start.sh
   healthcheckPath: /health
   healthcheckTimeout: 100
   restartPolicyType: on_failure

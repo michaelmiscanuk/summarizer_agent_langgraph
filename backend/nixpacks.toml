@@ -11,7 +11,7 @@ cmds = [
 ]
 
 [phases.build]
-cmds = ["echo 'Build complete'"]
+cmds = ["chmod +x start.sh", "echo 'Build complete'"]
 
 [start]
-cmd = "uvicorn api:app --host 0.0.0.0 --port $PORT --log-level info"
+cmd = "./start.sh"
