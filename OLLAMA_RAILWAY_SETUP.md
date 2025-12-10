@@ -1,4 +1,60 @@
-# 🚀 Ollama on Railway - Complete Setup Guide
+# � CRITICAL: You are missing the Ollama Service!
+
+## The Problem
+You said: *"I dont know ehere is OLLAMA service. I have this one service in railway now callled summarizer_agent_langgraph"*
+
+**This is the root cause.**
+You only have **ONE** service (the backend). You need **TWO** services.
+1.  `backend` (Your Python API)
+2.  `ollama` (The AI Model Server)
+
+Your backend is trying to connect to `ollama`, but `ollama` **does not exist**. That is why you get `Connection refused`.
+
+## 🛠️ The Fix: Create the Ollama Service
+
+You need to manually create the second service in Railway.
+
+### Step 1: Add a New Service
+1.  Go to your Railway Project Dashboard.
+2.  Click the **+ New** button (top right or big card).
+3.  Select **Empty Service**.
+4.  Click on the new service (it might be named randomly).
+5.  Go to **Settings** -> **General** -> **Service Name**.
+6.  Rename it to `ollama`.
+
+### Step 2: Configure the Ollama Service
+1.  **Source Code**:
+    *   Go to **Settings** -> **Source**.
+    *   Click **Connect Repo**.
+    *   Select your `summarizer_agent_langgraph` repo.
+2.  **Root Directory**:
+    *   Set **Root Directory** to `backend`.
+3.  **Dockerfile**:
+    *   Set **Custom Dockerfile** to `Dockerfile.ollama`.
+    *   *(This is CRITICAL. It tells Railway to use the Ollama setup, not Python)*.
+
+### Step 3: Add Variables to Ollama Service
+Go to the **Variables** tab in your new `ollama` service and add:
+*   `OLLAMA_HOST` = `0.0.0.0:11434`
+*   `OLLAMA_ORIGINS` = `*`
+*   `PORT` = `11434`
+
+### Step 4: Connect Backend to Ollama
+1.  Go back to your **Backend** service (the Python one).
+2.  Go to **Variables**.
+3.  Update `OLLAMA_HOST` to:
+    `http://${{ollama.RAILWAY_PRIVATE_DOMAIN}}:11434`
+    *(Copy this exactly. Railway will replace the `${{...}}` part with the real internal address)*.
+
+### Step 5: Redeploy
+1.  Redeploy **Ollama** first. Wait for it to say "Model ready" in the logs (might take 2-3 mins).
+2.  Redeploy **Backend**.
+
+## ❓ Why didn't `railway.yaml` work?
+Railway sometimes ignores the multi-service YAML if you already created a single-service project. The manual steps above are the most reliable way to fix it now.
+
+---
+# �🚀 Ollama on Railway - Complete Setup Guide
 
 This guide explains how to deploy Ollama with the qwen2.5-coder:0.5b model on Railway alongside your backend API.
 

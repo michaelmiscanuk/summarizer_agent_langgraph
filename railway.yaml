@@ -26,6 +26,6 @@ services:
     volumes:
       # Persist models across deploys
       - /root/.ollama
-    healthcheckPath: /
+    # Note: Ollama doesn't need a healthcheck - it's always ready once started
     # Note: This will run on CPU only. Performance will be limited.
     # For the 0.5B model, expect ~5-15 tokens/second on Railway's CPU
