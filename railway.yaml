@@ -1,24 +1,31 @@
-# Railway Configuration - Backend Only
-# This is a simple single-service configuration for your backend
+# Railway Service Configuration for Ollama
+# This creates a separate Ollama service that your backend can connect to
 
 services:
+  # Your main backend API
   backend:
-    # Tell Railway to look in the backend folder
+    # IMPORTANT: This tells Railway to look in the backend folder
     root: backend
-    
     build:
-      # Use Dockerfile for consistent builds
-      builder: DOCKERFILE
-      dockerfilePath: Dockerfile
-    
-    deploy:
-      healthcheckPath: /health
-      healthcheckTimeout: 100
-      restartPolicyType: ON_FAILURE
-      restartPolicyMaxRetries: 10
-    
+      dockerfile: Dockerfile
     env:
+      PORT: 8000
+      OLLAMA_HOST: http://${{ollama.RAILWAY_PRIVATE_DOMAIN}}:11434
       RELOAD: false
-      # For local Ollama, use: http://localhost:11434
-      # For Railway Ollama service, use: http://${{ollama.RAILWAY_PRIVATE_DOMAIN}}:11434
-      OLLAMA_HOST: http://localhost:11434
+    healthcheckPath: /health
+    
+  # Ollama service (CPU-only, will be slow but functional)
+  ollama:
+    # IMPORTANT: This tells Railway to look in the backend folder for Dockerfile.ollama
+    root: backend
+    build:
+      dockerfile: Dockerfile.ollama
+    env:
+      OLLAMA_HOST: 0.0.0.0:11434
+      OLLAMA_ORIGINS: "*"
+    volumes:
+      # Persist models across deploys
+      - /root/.ollama
+    healthcheckPath: /
+    # Note: This will run on CPU only. Performance will be limited.
+    # For the 0.5B model, expect ~5-15 tokens/second on Railway's CPU
