@@ -15,6 +15,84 @@ INPUT STATISTICS:
   - Words: 32
 
 SUMMARY:
+This is a mock summary of the provided text. It captures the main points and
+provides a concise overview.
+
+SENTIMENT:
+  NEUTRAL
+
+======================================================================
+
+
+######################
+[Our Input]
+The company's quarterly earnings fell short of expectations, causing stock
+prices to drop by 15 percent. Investors expressed concerns about the future
+outlook, and analysts are recommending caution in the technology sector.
+--------
+[OUTPUT]
+
+======================================================================
+TEXT ANALYSIS RESULTS
+======================================================================
+
+INPUT STATISTICS:
+  - Characters: 223
+  - Words: 32
+
+SUMMARY:
+This is a mock summary of the provided text. It captures the main points and
+provides a concise overview.
+
+SENTIMENT:
+  NEUTRAL
+
+======================================================================
+
+
+######################
+[Our Input]
+The company's quarterly earnings fell short of expectations, causing stock
+prices to drop by 15 percent. Investors expressed concerns about the future
+outlook, and analysts are recommending caution in the technology sector.
+--------
+[OUTPUT]
+
+======================================================================
+TEXT ANALYSIS RESULTS
+======================================================================
+
+INPUT STATISTICS:
+  - Characters: 223
+  - Words: 32
+
+SUMMARY:
+This is a mock summary of the provided text. It captures the main points and
+provides a concise overview.
+
+SENTIMENT:
+  NEUTRAL
+
+======================================================================
+
+
+######################
+[Our Input]
+The company's quarterly earnings fell short of expectations, causing stock
+prices to drop by 15 percent. Investors expressed concerns about the future
+outlook, and analysts are recommending caution in the technology sector.
+--------
+[OUTPUT]
+
+======================================================================
+TEXT ANALYSIS RESULTS
+======================================================================
+
+INPUT STATISTICS:
+  - Characters: 223
+  - Words: 32
+
+SUMMARY:
 Despite a negative quarterly sales report, stocks' price dropped by 15% due to
 market volatility. Analysts are advising investors to stay cautious in the tech
 industry.

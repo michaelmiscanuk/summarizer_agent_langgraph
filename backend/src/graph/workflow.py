@@ -12,7 +12,7 @@ from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.memory import MemorySaver
 
 from .state import TextAnalysisState
-from .nodes import input_processor, create_summarizer_node
+from .nodes import input_processor, dummy_middle_node, create_summarizer_node
 
 # Configure logging
 logging.basicConfig(
@@ -65,6 +65,9 @@ def create_workflow(model_name: Optional[str] = None, use_checkpointer: bool = T
     logger.info("  - input_processor: Calculates word count from input text")
     builder.add_node("input_processor", input_processor)
 
+    logger.info("  - dummy_middle_node: Reads state and prints without returning")
+    builder.add_node("dummy_middle_node", dummy_middle_node)
+
     logger.info(f"  - summarizer: Generates summary and sentiment using {model_name}")
     summarizer_node = create_summarizer_node(model_name=model_name)
     builder.add_node("summarizer", summarizer_node)
@@ -74,8 +77,11 @@ def create_workflow(model_name: Optional[str] = None, use_checkpointer: bool = T
     logger.info("  START -> input_processor")
     builder.add_edge(START, "input_processor")
 
-    logger.info("  input_processor -> summarizer")
-    builder.add_edge("input_processor", "summarizer")
+    logger.info("  input_processor -> dummy_middle_node")
+    builder.add_edge("input_processor", "dummy_middle_node")
+
+    logger.info("  dummy_middle_node -> summarizer")
+    builder.add_edge("dummy_middle_node", "summarizer")
 
     logger.info("  summarizer -> END")
     builder.add_edge("summarizer", END)

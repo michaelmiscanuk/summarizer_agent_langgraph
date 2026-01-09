@@ -6,6 +6,7 @@ Designed to be deployed on Render.com and accessed by the frontend.
 """
 
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import Optional
@@ -193,18 +194,28 @@ async def list_models():
 @app.exception_handler(404)
 async def not_found_handler(request, exc):
     """Handle 404 errors"""
-    return {"success": False, "error": "Endpoint not found", "detail": str(exc)}
+    return JSONResponse(
+        status_code=404,
+        content={
+            "success": False,
+            "error": "Endpoint not found",
+            "detail": str(exc),
+        },
+    )
 
 
 @app.exception_handler(500)
 async def internal_error_handler(request, exc):
     """Handle 500 errors"""
     logger.error("Internal server error: %s", str(exc), exc_info=True)
-    return {
-        "success": False,
-        "error": "Internal server error",
-        "detail": "An unexpected error occurred. Please try again later.",
-    }
+    return JSONResponse(
+        status_code=500,
+        content={
+            "success": False,
+            "error": "Internal server error",
+            "detail": "An unexpected error occurred. Please try again later.",
+        },
+    )
 
 
 # Run with: uvicorn api:app --reload --host 0.0.0.0 --port 8000

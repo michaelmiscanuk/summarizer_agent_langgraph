@@ -51,6 +51,9 @@ dependencies = [
     
     # Optional: For better performance
     "orjson>=3.10.0",
+
+    # Graphs
+    "graphviz",
 ]
 
 [project.optional-dependencies]

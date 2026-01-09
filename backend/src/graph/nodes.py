@@ -58,6 +58,43 @@ def input_processor(state: TextAnalysisState) -> Dict[str, Any]:
     return {"word_count": word_count}
 
 
+def dummy_middle_node(state: TextAnalysisState) -> None:
+    """
+    Dummy node: Reads state and prints without returning anything
+
+    This node demonstrates that a node can read the entire state,
+    perform side effects (like printing), and not return any state updates.
+
+    Args:
+        state: Current state containing all fields
+
+    Returns:
+        None (no state updates)
+    """
+    logger.info("=" * 60)
+    logger.info("DUMMY NODE: Middle Node - Starting")
+    logger.info("=" * 60)
+
+    print("\n" + "A" * 80)
+    print("AAAAAAAAAAAAAAAAAAAAAAAA DUMMY NODE EXECUTING AAAAAAAAAAAAAAAAAAAAAAAA")
+    print("A" * 80 + "\n")
+
+    # Read and print the entire state
+    logger.info("Reading entire state:")
+    logger.info(f"  - input_text: {state.get('input_text', 'N/A')[:100]}...")
+    logger.info(f"  - word_count: {state.get('word_count', 'N/A')}")
+    logger.info(f"  - summary: {state.get('summary', 'N/A')}")
+    logger.info(f"  - sentiment: {state.get('sentiment', 'N/A')}")
+
+    print("\n" + "=" * 80)
+    print(f"STATE INSPECTION: input_text has {state.get('word_count', 0)} words")
+    print("=" * 80 + "\n")
+
+    logger.info("=" * 60)
+    logger.info("DUMMY NODE: Middle Node - Completed (no return)")
+    logger.info("=" * 60)
+
+
 def summarizer(
     state: TextAnalysisState, model_name: str = "llama3.2"
 ) -> Dict[str, Any]:
